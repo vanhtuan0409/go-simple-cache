@@ -1,4 +1,4 @@
-// Package cache provides a dead simple implementation of in-mem cache with LRU or LFU eviction method
+// Package cache provides a dead simple implementation of in-mem cache with LRU/LFU/FIFO eviction method
 package cache
 
 import (
