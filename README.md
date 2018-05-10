@@ -54,3 +54,20 @@ With Cache of size 2:
 Actions: Put x -> Put y -> Get x -> Get x -> Get y -> (Put z)
 When z is put, x will be evict
 ```
+
+### Benchmark
+
+Device: Macbook Air 2017
+
+* RAM: 8GB
+* CPU: 1.8GHz Intel Core i5
+
+```
+goos: darwin
+goarch: amd64
+pkg: github.com/vanhtuan0409/go-simple-cache
+BenchmarkCacheWrite-4   	 3000000	       449 ns/op	     113 B/op	       3 allocs/op
+BenchmarkCacheRead-4    	50000000	        30.7 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/vanhtuan0409/go-simple-cache	3.388s
+```
