@@ -2,6 +2,8 @@
 
 Dead simple in-mem cache with LFU/LRU/FIFO eviction
 
+[![GoDoc](https://godoc.org/github.com/vanhtuan0409/go-simple-cache?status.png)](https://godoc.org/github.com/vanhtuan0409/go-simple-cache)
+
 ### Installation
 
 ```
