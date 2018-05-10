@@ -20,10 +20,11 @@ type Cache interface {
 
 type cache struct {
 	sync.Mutex
-	size  int
-	queue *list.List
-	evict evictFn
-	items map[string]*list.Element
+	size                   int
+	queue                  *list.List
+	evict                  evictFn
+	shouldUpdateQueueOnGet bool
+	items                  map[string]*list.Element
 }
 
 // NewLRUCache Create new cache with LRU eviction
@@ -43,6 +44,17 @@ func NewLFUCache(size int) Cache {
 		queue: list.New(),
 		items: map[string]*list.Element{},
 		evict: lfuEvictFn,
+	}
+}
+
+// NewFIFOCache Create new cache with FIFO eviction
+func NewFIFOCache(size int) Cache {
+	return &cache{
+		size:  size,
+		queue: list.New(),
+		items: map[string]*list.Element{},
+		shouldUpdateQueueOnGet: true,
+		evict: lruEvictFn,
 	}
 }
 
@@ -73,12 +85,16 @@ func (c *cache) Get(key string) (interface{}, error) {
 	if !ok {
 		return nil, ErrKeyNotFound
 	}
+	item := ele.Value.(*cacheItem)
+	item.increaseUseCount()
+
+	if !c.shouldUpdateQueueOnGet {
+		return item.value, nil
+	}
 
 	c.Lock()
 	defer c.Unlock()
 	c.queue.MoveToFront(ele)
-	item := ele.Value.(*cacheItem)
-	item.increaseUseCount()
 	return item.value, nil
 }
 

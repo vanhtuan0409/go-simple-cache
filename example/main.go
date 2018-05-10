@@ -34,6 +34,25 @@ func main() {
 	printValue(lfuCache, "x")
 	printValue(lfuCache, "y")
 	printValue(lfuCache, "z")
+
+	fmt.Println("=====")
+
+	fifoCache := cache.NewFIFOCache(3)
+	fifoCache.Set("x", 1)
+	fifoCache.Set("y", 2)
+	fifoCache.Set("z", 3)
+	fifoCache.Get("x")
+	fifoCache.Get("x")
+	fifoCache.Get("y")
+	fifoCache.Get("y")
+	fifoCache.Get("z")
+	fifoCache.Get("z")
+	fifoCache.Set("0", 4)
+	fmt.Println("Result:")
+	printValue(fifoCache, "x")
+	printValue(fifoCache, "y")
+	printValue(fifoCache, "z")
+	printValue(fifoCache, "0")
 }
 
 func printValue(cache cache.Cache, key string) {
