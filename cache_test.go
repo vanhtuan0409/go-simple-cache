@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -105,4 +106,16 @@ func TestGetOnEmptyCache(t *testing.T) {
 	value, err = fifo.Get("1")
 	assert.Nil(t, value, "Expect value to be nil")
 	assert.Error(t, err, "Expect error")
+}
+
+func TestNoEviction(t *testing.T) {
+	c := NewLRUCache(-1)
+	for i := 0; i < 100; i++ {
+		c.Set(strconv.Itoa(i), 1)
+	}
+	for i := 0; i < 100; i++ {
+		value, err := c.Get(strconv.Itoa(i))
+		assert.Equal(t, 1, value, "Expect can get value")
+		assert.NoError(t, err, "Expect no error")
+	}
 }

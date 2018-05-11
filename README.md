@@ -21,7 +21,7 @@ type Cache interface {
 }
 ```
 
-* There are 3 methods to create a cache based on eviction method:
+* There are 3 methods to create a cache based on eviction method. Set Cache size to negative to never trigger eviction:
 
 ```
 func NewLRUCache(size int) Cache

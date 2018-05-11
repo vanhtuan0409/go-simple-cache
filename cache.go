@@ -100,5 +100,8 @@ func (c *cache) Get(key string) (interface{}, error) {
 }
 
 func shouldEvictBeforeInsert(c *cache) bool {
+	if c.size < 0 {
+		return false
+	}
 	return c.queue.Len() >= c.size
 }
