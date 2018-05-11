@@ -26,6 +26,11 @@ func TestLRUCache(t *testing.T) {
 	zValue, err := c.Get("z")
 	assert.Equal(t, 3, zValue, "Expect z to be 3")
 	assert.NoError(t, err, "Expect no error")
+
+	c.Set("z", 4)
+	zValue, err = c.Get("z")
+	assert.Equal(t, 4, zValue, "Expect z to be 4")
+	assert.NoError(t, err, "Expect no error")
 }
 
 func TestLFUCache(t *testing.T) {
@@ -48,6 +53,11 @@ func TestLFUCache(t *testing.T) {
 	zValue, err := c.Get("z")
 	assert.Equal(t, 3, zValue, "Expect z to be 3")
 	assert.NoError(t, err, "Expect no error")
+
+	c.Set("z", 4)
+	zValue, err = c.Get("z")
+	assert.Equal(t, 4, zValue, "Expect z to be 4")
+	assert.NoError(t, err, "Expect no error")
 }
 func TestFIFOCache(t *testing.T) {
 	c := NewFIFOCache(2)
@@ -69,5 +79,10 @@ func TestFIFOCache(t *testing.T) {
 
 	zValue, err := c.Get("z")
 	assert.Equal(t, 3, zValue, "Expect z to be 3")
+	assert.NoError(t, err, "Expect no error")
+
+	c.Set("z", 4)
+	zValue, err = c.Get("z")
+	assert.Equal(t, 4, zValue, "Expect z to be 4")
 	assert.NoError(t, err, "Expect no error")
 }
