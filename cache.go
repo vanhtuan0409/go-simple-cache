@@ -67,6 +67,7 @@ func (c *cache) Set(key string, value interface{}) {
 	if ok {
 		item := ele.Value.(*cacheItem)
 		item.value = value
+		item.increaseUseCount()
 		c.queue.MoveToFront(ele)
 		return
 	}
